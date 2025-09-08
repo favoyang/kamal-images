@@ -9,6 +9,11 @@ on:
     paths:
       - caddy-cloudflare-geoip-ratelimit/Dockerfile
 
+# Permissions needed for this workflow
+permissions:
+  contents: read
+  packages: write
+
 # Environment variables available to all jobs and steps in this workflow
 env:
   DOCKER_BUILDKIT: 1
