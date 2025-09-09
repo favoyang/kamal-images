@@ -9,6 +9,7 @@ When adding a new Docker image to this project:
 - Add entry to `.github/config/images.yml`
 - Create `.github/workflows/build-[image-name].yml`
 - Create `[image-name]/README.md` following existing pattern
+- Update main `README.md` to include new image in "Images Included" section
 - Test with `./scripts/test-update.sh`
 
 ## Registry support
