@@ -7,7 +7,7 @@ When adding a new Docker image to this project:
 - Create directory: `mkdir [image-name]`
 - Create `[image-name]/Dockerfile` with `LABEL service="[service-name]"`
 - Add entry to `.github/config/images.yml`
-- Create `.github/workflows/build-[image-name].yml`
+- Create `.github/workflows/build-[image-name].yml` (simple wrapper that calls reusable workflow)
 - Create `[image-name]/README.md` following existing pattern
 - Update main `README.md` to include new image in "Images Included" section
 - Test with `./scripts/test-update.sh`
@@ -48,9 +48,41 @@ The following tags are available for the `ghcr.io/favoyang/kamal-images/[image-n
 - `<version>` (eg: `1.0.0`, including: `1.0`, `1`, etc.)
 ```
 
+## Workflow template
+
+Create `.github/workflows/build-[image-name].yml` using this template:
+
+```yaml
+# Workflow to build and push [Image Name] Docker image to GitHub Container Registry
+name: Build [image-name]
+
+# Controls when the action will run
+on:
+  workflow_dispatch:  # allows to run the workflow manually from the Actions tab
+  push:
+    branches: main
+    paths:
+      - [image-name]/Dockerfile
+
+# Permissions needed for this workflow
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      docker_name: [image-name]
+      docker_description: "[Description of the Docker image]"
+      version_regex: '[appropriate-regex-pattern]'
+      platforms: linux/amd64
+```
+
 ## Key requirements
 
 - Always add `LABEL service="[service-name]"` to Dockerfile
-- Copy existing workflow structure exactly
+- Use the reusable workflow template above for new build workflows
+- Choose appropriate `version_regex` pattern based on base image registry
 - Default to `linux/amd64` architecture
 - Test with `./scripts/test-update.sh` before committing
