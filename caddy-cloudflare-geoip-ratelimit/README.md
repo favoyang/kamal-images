@@ -3,7 +3,7 @@
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR%20-%20favoyang%2Fkamal--images%2Fcaddy--cloudflare--geoip--ratelimit%20-%20%230db7ed?style=flat&logo=docker)](https://ghcr.io/favoyang/kamal-images/caddy-cloudflare-geoip-ratelimit)
 [![GitHub build status](https://img.shields.io/github/actions/workflow/status/favoyang/kamal-images/build-caddy-cloudflare-geoip-ratelimit.yml?label=Build)](https://github.com/favoyang/kamal-images/actions/workflows/build-caddy-cloudflare-geoip-ratelimit.yml)
 
-This image is updated automatically by GitHub Actions when changes are made to the Dockerfile using the official [Caddy Docker](https://hub.docker.com/_/caddy) image and the following modules:
+This image is updated automatically by GitHub Actions when changes are made to the Dockerfile using the official [Caddy Docker](https://hub.docker.com/_/caddy) image with added Kamal service label `service="caddy"` and the following modules:
 
 - **Cloudflare DNS**: for Cloudflare DNS-01 ACME validation support | [caddy-dns/cloudflare](https://github.com/caddy-dns/cloudflare)
 - **Cloudflare IPs**: to retrieve Cloudflare's current [IP ranges](https://www.cloudflare.com/ips/) | [WeidiDeng/caddy-cloudflare-ip](https://github.com/WeidiDeng/caddy-cloudflare-ip)
@@ -11,8 +11,6 @@ This image is updated automatically by GitHub Actions when changes are made to t
 - **Rate Limit**: to control request rates and prevent abuse | [mholt/caddy-ratelimit](https://github.com/mholt/caddy-ratelimit)
 
 ## Usage
-
-Since this image is built off the official Caddy Docker image, the same [volumes](https://docs.docker.com/storage/volumes/) and/or [bind mounts](https://docs.docker.com/storage/bind-mounts/), ports mapping, etc. can be used with this container. Additional [environment variables](https://caddyserver.com/docs/caddyfile/concepts#environment-variables) may be needed for the added modules.
 
 Docker builds are available at GitHub Container Registry:
 
