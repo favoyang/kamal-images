@@ -39,6 +39,7 @@ jobs:
       labels: ${{ steps.metadata.outputs.labels }}
       tags: ${{ steps.metadata.outputs.tags }}
       platforms: ${{ inputs.platforms }}
+      should_build: ${{ steps.check_version.outputs.should_build }}
 
     steps:
       - name: Checkout repository
@@ -64,11 +65,45 @@ jobs:
             org.opencontainers.image.title=${{ inputs.docker_name }}
             org.opencontainers.image.description=${{ inputs.docker_description }}
 
+      - name: Check if version already exists in registry
+        id: check_version
+        run: |
+          IMAGE_NAME="ghcr.io/${{ github.repository }}/${{ inputs.docker_name }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          echo "Checking if $IMAGE_NAME:$VERSION already exists..."
+          
+          # Login to GHCR to check if image exists
+          echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+          # Try to pull the image manifest to check if it exists
+          if docker manifest inspect "$IMAGE_NAME:$VERSION" >/dev/null 2>&1; then
+            echo "Version $VERSION already exists in registry"
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          else
+            echo "Version $VERSION does not exist in registry, will build and push"
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          fi
+
+  # Job to skip build when version already exists
+  skip:
+    name: Skip build - version already exists
+    runs-on: ubuntu-latest
+    needs: metadata
+    if: needs.metadata.outputs.should_build == 'false'
+    
+    steps:
+      - name: Skip build notification
+        run: |
+          echo "Skipping build for ${{ inputs.docker_name }} version ${{ needs.metadata.outputs.version }}"
+          echo "This version already exists in the registry"
+
   # Job to build and publish Docker image
   build:
     name: Build and publish Docker image
     runs-on: ubuntu-latest
     needs: metadata
+    if: needs.metadata.outputs.should_build == 'true'
 
     steps:
       - name: Checkout repository
