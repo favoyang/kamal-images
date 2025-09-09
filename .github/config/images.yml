@@ -1,0 +1,14 @@
+# Configuration file for Docker base image updates
+# Add new images here to include them in the automated update process
+
+images:
+  - name: caddy-cloudflare-geoip-ratelimit
+    base_image: caddy
+    dockerfile_path: caddy-cloudflare-geoip-ratelimit/Dockerfile
+    build_workflow: build-caddy-cloudflare-geoip-ratelimit.yml
+
+  # Example of how to add more images in the future:
+  # - name: nginx-custom
+  #   base_image: nginx
+  #   dockerfile_path: nginx-custom/Dockerfile
+  #   build_workflow: build-nginx-custom.yml
