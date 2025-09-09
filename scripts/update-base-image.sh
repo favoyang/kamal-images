@@ -87,8 +87,20 @@ get_current_version() {
     echo "$current_version"
 }
 
-# Function to get latest version from Docker Hub
+# Function to get latest version from various registries
 get_latest_version() {
+    local base_image="$1"
+    
+    # Check if it's a GitHub Container Registry image
+    if [[ "$base_image" == ghcr.io/* ]]; then
+        get_latest_version_ghcr "$base_image"
+    else
+        get_latest_version_dockerhub "$base_image"
+    fi
+}
+
+# Function to get latest version from Docker Hub
+get_latest_version_dockerhub() {
     local base_image="$1"
     local api_url="https://registry.hub.docker.com/v2/repositories/library/${base_image}/tags/?page_size=100"
     
@@ -101,6 +113,36 @@ get_latest_version() {
     
     if [ -z "$latest_version" ]; then
         log_error "Could not fetch latest version for $base_image" >&2
+        return 1
+    fi
+    
+    echo "$latest_version"
+}
+
+# Function to get latest version from GitHub Container Registry
+get_latest_version_ghcr() {
+    local base_image="$1"
+    
+    log_info "Fetching latest version for $base_image from GitHub Container Registry..." >&2
+    
+    # Extract owner and repo from ghcr.io/owner/repo/package format
+    # For ghcr.io/henrygd/beszel/beszel, we want henrygd/beszel
+    local ghcr_path="${base_image#ghcr.io/}"
+    local owner="${ghcr_path%%/*}"
+    local remaining="${ghcr_path#*/}"
+    local repo="${remaining%%/*}"
+    
+    # For GitHub Container Registry, we'll use the GitHub API to get releases
+    local api_url="https://api.github.com/repos/${owner}/${repo}/releases/latest"
+    
+    local latest_version
+    latest_version=$(curl -s "$api_url" | \
+        jq -r '.tag_name // empty' | \
+        sed 's/^v//')  # Remove 'v' prefix if present
+    
+    if [ -z "$latest_version" ]; then
+        log_warning "Could not fetch latest version from GitHub releases for $base_image" >&2
+        log_info "This might be expected for images that don't use GitHub releases for versioning" >&2
         return 1
     fi
     
