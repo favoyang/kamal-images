@@ -11,3 +11,7 @@ Each image in this repository is designed to work with Kamal and requires approp
 ## Images Included
 
 - **[caddy-cloudflare-geoip-ratelimit](./caddy-cloudflare-geoip-ratelimit)**: Custom Caddy server with Cloudflare, GeoIP, and rate limiting capabilities
+
+## Automated Updates
+
+Base images are automatically checked for updates every Sunday and updated when new versions are available. To include new images in automated updates, add them to `.github/config/images.yml`. For local testing, run `./scripts/test-update.sh`.
