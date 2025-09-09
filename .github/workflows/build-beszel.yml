@@ -41,7 +41,7 @@ jobs:
 
       - name: Parse Beszel version
         id: version
-        run: echo "version=$(grep -Eo 'ghcr\.io/henrygd/beszel/beszel:[0-9]+\.[0-9]+\.[0-9]+' $DOCKER_NAME/Dockerfile | cut -d ':' -f3)" | tee -a $GITHUB_OUTPUT
+        run: echo "version=$(grep -oP 'ghcr\.io/henrygd/beszel/beszel:\K[0-9]+\.[0-9]+\.[0-9]+' $DOCKER_NAME/Dockerfile)" | tee -a $GITHUB_OUTPUT
 
       - name: Generate image metadata with Beszel version
         uses: docker/metadata-action@v5
