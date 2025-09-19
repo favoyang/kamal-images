@@ -16,4 +16,4 @@ Docker builds are available at GitHub Container Registry:
 The following tags are available for the `ghcr.io/favoyang/kamal-images/beszel` image:
 
 - `latest`
-- `<version>` (eg: `0.12.7`, including: `0.12`, `0`, etc.)
+- `<version>` (eg: `0.12.9`, including: `0.12`, `0`, etc.)
