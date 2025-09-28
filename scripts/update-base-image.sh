@@ -169,7 +169,8 @@ update_dockerfile() {
     log_info "Created backup: ${dockerfile_path}.bak"
     
     # Replace all occurrences of the current version with the latest version
-    sed -i "s/${base_image}:${current_version}/${base_image}:${latest_version}/g" "$dockerfile_path"
+    # Use | as delimiter to avoid conflicts with forward slashes in base image names
+    sed -i "s|${base_image}:${current_version}|${base_image}:${latest_version}|g" "$dockerfile_path"
     
     # Verify the update was successful
     local updated_version
