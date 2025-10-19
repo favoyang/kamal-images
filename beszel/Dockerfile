@@ -1,4 +1,4 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/henrygd/beszel/beszel:0.13.2
+FROM ghcr.io/henrygd/beszel/beszel:0.14.0
 
 LABEL service="beszel"
