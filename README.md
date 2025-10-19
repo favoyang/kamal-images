@@ -11,7 +11,6 @@ Each image in this repository is designed to work with Kamal and requires approp
 ## Images Included
 
 - **[caddy-cloudflare-geoip-ratelimit](./caddy-cloudflare-geoip-ratelimit)**: Custom Caddy server with Cloudflare, GeoIP, and rate limiting capabilities
-- **[beszel](./beszel)**: Lightweight server monitoring dashboard with Kamal service label
 
 ## Automated Updates
 

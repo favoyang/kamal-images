@@ -126,7 +126,7 @@ get_latest_version_ghcr() {
     log_info "Fetching latest version for $base_image from GitHub Container Registry..." >&2
     
     # Extract owner and repo from ghcr.io/owner/repo/package format
-    # For ghcr.io/henrygd/beszel/beszel, we want henrygd/beszel
+    # For ghcr.io/owner/repo/package, we want owner/repo
     local ghcr_path="${base_image#ghcr.io/}"
     local owner="${ghcr_path%%/*}"
     local remaining="${ghcr_path#*/}"

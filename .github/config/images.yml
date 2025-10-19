@@ -7,11 +7,6 @@ images:
     dockerfile_path: caddy-cloudflare-geoip-ratelimit/Dockerfile
     build_workflow: build-caddy-cloudflare-geoip-ratelimit.yml
 
-  - name: beszel
-    base_image: ghcr.io/henrygd/beszel/beszel
-    dockerfile_path: beszel/Dockerfile
-    build_workflow: build-beszel.yml
-
   # Example of how to add more images in the future:
   # - name: nginx-custom
   #   base_image: nginx
