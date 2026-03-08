@@ -5,7 +5,7 @@
 When adding a new Docker image to this project:
 
 - Create directory: `mkdir [image-name]`
-- Create `[image-name]/Dockerfile` with `LABEL service="[service-name]"`
+- Create `[image-name]/Dockerfile`
 - Add entry to `.github/config/images.yml`
 - Create `.github/workflows/build-[image-name].yml` (simple wrapper that calls reusable workflow)
 - Create `[image-name]/README.md` following existing pattern
@@ -27,22 +27,22 @@ When adding a new Docker image to this project:
 Follow this exact structure for `[image-name]/README.md`:
 
 ```markdown
-# [Image Name] with Kamal service label
+# [Image Name]
 
-[![GitHub Container Registry](https://img.shields.io/badge/GHCR%20-%20favoyang%2Fkamal--images%2F[image-name]%20-%20%230db7ed?style=flat&logo=docker)](https://ghcr.io/favoyang/kamal-images/[image-name])
-[![GitHub build status](https://img.shields.io/github/actions/workflow/status/favoyang/kamal-images/build-[image-name].yml?label=Build)](https://github.com/favoyang/kamal-images/actions/workflows/build-[image-name].yml)
+[![GitHub Container Registry](https://img.shields.io/badge/GHCR%20-%20favoyang%2Fcustom--images%2F[image-name]%20-%20%230db7ed?style=flat&logo=docker)](https://ghcr.io/favoyang/custom-images/[image-name])
+[![GitHub build status](https://img.shields.io/github/actions/workflow/status/favoyang/custom-images/build-[image-name].yml?label=Build)](https://github.com/favoyang/custom-images/actions/workflows/build-[image-name].yml)
 
-This image is updated automatically by GitHub Actions when changes are made to the Dockerfile using the official [Base Image](link-to-base) image with added Kamal service label `service="[service-name]"`.
+This image is updated automatically by GitHub Actions when changes are made to the Dockerfile using the official [Base Image](link-to-base) image.
 
 ## Usage
 
 Docker builds are available at GitHub Container Registry:
 
-- **GitHub Packages**: `docker pull ghcr.io/favoyang/kamal-images/[image-name]:latest`
+- **GitHub Packages**: `docker pull ghcr.io/favoyang/custom-images/[image-name]:latest`
 
 ### Tags
 
-The following tags are available for the `ghcr.io/favoyang/kamal-images/[image-name]` image:
+The following tags are available for the `ghcr.io/favoyang/custom-images/[image-name]` image:
 
 - `latest`
 - `<version>` (eg: `1.0.0`, including: `1.0`, `1`, etc.)
@@ -81,7 +81,6 @@ jobs:
 
 ## Key requirements
 
-- Always add `LABEL service="[service-name]"` to Dockerfile
 - Use the reusable workflow template above for new build workflows
 - Choose appropriate `version_regex` pattern based on base image registry
 - Default to `linux/amd64` architecture

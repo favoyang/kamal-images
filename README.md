@@ -1,12 +1,8 @@
-# Kamal Images
+# Custom Docker Images
 
 ## Personal Repository
 
-This repository contains custom Docker images for personal use with Kamal deployments.
-
-## Kamal Service Labels
-
-Each image in this repository is designed to work with Kamal and requires appropriate service labels for deployment configuration.
+This repository contains custom Docker images for personal use.
 
 ## Images Included
 
